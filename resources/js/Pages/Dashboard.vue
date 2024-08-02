@@ -78,13 +78,15 @@ onMounted(() => {
                                 type="submit"
                                 class="px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
                             >
-                                Upload
+                                Import
                             </button>
                         </form>
                     </div>
 
                     <h2 class="mt-4 mb-4 text-2xl font-bold">Products</h2>
-                    <table class="min-w-full bg-white border border-gray-300">
+                    <div v-if="!products.length">No Imported Products</div>
+                    <div v-else>
+                        <table class="min-w-full bg-white border border-gray-300">
                         <thead>
                             <tr class="bg-gray-100 border-b">
                                 <th
@@ -130,6 +132,8 @@ onMounted(() => {
                             </tr>
                         </tbody>
                     </table>
+                    </div>
+                    
                 </div>
             </div>
         </div>
