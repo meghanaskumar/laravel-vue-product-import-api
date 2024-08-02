@@ -1,6 +1,7 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import InputError from "@/Components/InputError.vue";
+import InputSuccess from "@/Components/InputSuccess.vue";
 import { Head } from "@inertiajs/vue3";
 import axios from "axios";
 import { ref, onMounted } from "vue";
@@ -8,6 +9,8 @@ import { ref, onMounted } from "vue";
 const file = ref(null);
 const products = ref([]);
 const errorMessage = ref("");
+const successMessage = ref("");
+
 
 const handleFileUpload = (event) => {
     file.value = event.target.files[0];
@@ -20,9 +23,11 @@ const uploadCSV = async () => {
     try {
         errorMessage.value = '';
         await axios.get("/sanctum/csrf-cookie");
-        await axios.post("/api/import", formData);
+        const response = await axios.post("/api/import", formData);
+        successMessage.value = response.data.message;
         fetchProducts();
     } catch (error) {
+        successMessage.value = '';
         if (
             error.response &&
             error.response.data &&
@@ -44,6 +49,7 @@ const fetchProducts = async () => {
         const response = await axios.get("/api/products");
         products.value = response.data;
     } catch (error) {
+        successMessage.value = '';
         errorMessage.value = "Error fetching products:" + error.message;
     }
 };
@@ -82,7 +88,7 @@ onMounted(() => {
                             </button>
                         </form>
                     </div>
-
+                    <InputSuccess class="mt-2" :message="successMessage" />
                     <h2 class="mt-4 mb-4 text-2xl font-bold">Products</h2>
                     <div v-if="!products.length">No Imported Products</div>
                     <div v-else>
