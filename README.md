@@ -29,6 +29,9 @@ php artisan serve // will point to a url where the application loads
 This will point to http://127.0.0.1:8000 Will have Login and Register button
 
 http://127.0.0.1:8000/register
+
 http://127.0.0.1:8000/login
 
 After registering a new user will point to User Home page where we can upload sample csv data and , imported products can be visible on the home page itself
+
+sampledata.csv is attached within the repo
